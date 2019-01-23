@@ -11,6 +11,15 @@ You can install the development version of nat.jrcbrains from GitHub:
 ``` r
 devtools::install_github('jefferis/nat.jrcbrains')
 ```
+If you get error messages during installtion about `ANTsRCore` then try the following:
+
+```
+source("https://neuroconductor.org/neurocLite.R")
+neuro_install('ANTsRCore')
+```
+before installing the *nat.jrcbrains*. See the 
+[nat.ants](https://github.com/jefferis/nat.ants) and
+[ANTsRCore](https://github.com/ANTsX/ANTsRCore) packages for details.
 
 ## Example
 
@@ -18,11 +27,13 @@ You must first download the registrations you want from
 
 * https://www.janelia.org/open-science/jrc-2018-brain-templates
 
+To run this example you will need *JRC 2018 Female - JFRC 2010*.
+
 ``` r
 library(nat.jrcbrains)
 
 # setup
-options(nat.jrcbrains.regfolder='/GD/projects/JFRC/JohnBogovic/jrc-2018-brain-templates')
+options(nat.jrcbrains.regfolder='/path/to/jrc-2018-brain-templates')
 register_saalfeldlab_registrations()
 
 # use
