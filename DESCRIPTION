@@ -12,3 +12,10 @@ Description: Packaged version of registrations linking different Drosophila
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+Imports: 
+    nat.ants,
+    nat.templatebrains,
+    nat,
+    stringr
+Remotes: jefferis/nat.ants
+RoxygenNote: 6.1.1
