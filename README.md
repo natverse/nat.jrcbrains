@@ -18,10 +18,18 @@ You must first download the registrations you want from
 
 * https://www.janelia.org/open-science/jrc-2018-brain-templates
 
-
 ``` r
 library(nat.jrcbrains)
 
+# setup
+options(nat.jrcbrains.regfolder='/GD/projects/JFRC/JohnBogovic/jrc-2018-brain-templates')
+register_saalfeldlab_registrations()
+
+# use
+library(nat.templatebrains)
+# sample neurons in JFRC2 space
+pd2a = read.neurons("https://ars.els-cdn.com/content/image/1-s2.0-S0896627318307426-mmc5.zip")
+pd2a.fafb14=xform_brain(pd2a, sample=JFRC2, reference=FAFB14)
 ```
 
 ## See
