@@ -1,6 +1,33 @@
 download_saalfeldlab_registrations <- function() {
-  stop("Not yet implemented")
-  # download.file("https://ndownloader.figshare.com/files/12919949?private_link=85b2f2e4f479c94441f2")
+  #Step1: Check if options for folder path are set, if not set it here..
+  if (is.null(getOption('nat.jrcbrains.regfolder'))){
+      options(nat.jrcbrains.regfolder='/GD/projects/JFRC/JohnBogovic/jrc-2018-brain-templates')}
+  #Step2: check if folder path exists..
+  if (!dir.exists(options('nat.jrcbrains.regfolder')[[1]])){
+      #Create the folder path now..
+      dir.create(options('nat.jrcbrains.regfolder')[[1]], recursive = TRUE, showWarnings = TRUE)
+  }
+  #Step3: Download the file to the folder..
+  utils::download.file("https://ndownloader.figshare.com/files/12919949?private_link=85b2f2e4f479c94441f2",
+                file.path(options('nat.jrcbrains.regfolder')[[1]], 'download_reg.zip'))
+  utils::unzip(file.path(options('nat.jrcbrains.regfolder')[[1]], 'download_reg.zip'),
+        exdir = options('nat.jrcbrains.regfolder')[[1]])
+  unlink(file.path(options('nat.jrcbrains.regfolder')[[1]], 'download_reg.zip'))
+
+  #Step4: Put them in a specific project folder..
+  file_name <- list.files(path = options('nat.jrcbrains.regfolder')[[1]],
+                         pattern = "0GenericAffine.mat$", recursive = TRUE)
+  matchnames <- stringr::str_match(file_name, "^([^_]+)_([^_]+)0GenericAffine.mat$")
+  folder_name <- paste0(matchnames[2],'_',matchnames[3])
+  folder_path <- file.path(options('nat.jrcbrains.regfolder')[[1]],folder_name)
+  dir.create(folder_path, recursive = FALSE, showWarnings = TRUE)
+
+  files_target <- setdiff(list.files(options('nat.jrcbrains.regfolder')[[1]],folder_name),
+                          folder_name)
+  result <- file.copy(file.path(options('nat.jrcbrains.regfolder')[[1]],files_target),
+            file.path(options('nat.jrcbrains.regfolder')[[1]],folder_name))
+  unlink(file.path(options('nat.jrcbrains.regfolder')[[1]],files_target))
+
 }
 
 #' Register Saalfeld Lab registrations with nat.templatebrains
