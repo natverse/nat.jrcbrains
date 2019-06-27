@@ -1,4 +1,15 @@
-download_saalfeldlab_registrations <- function() {
+download_saalfeldlab_registrations <- function(fileformat = '.h5') {
+
+  if (fileformat == '.nii'){
+    download_url <- "https://ndownloader.figshare.com/files/12919949?private_link=85b2f2e4f479c94441f2"
+    download_filename <- 'download_reg.zip'
+    search_pattern <- "0GenericAffine.mat$"
+  } else if (fileformat == '.h5'){
+    download_url <- "https://ndownloader.figshare.com/files/14362754?private_link=3a8b1d84c5e197edc97c"
+    download_filename <- 'JRC2018F_FAFB.h5'
+    search_pattern <- ".h5$"
+  }
+
   #Step1: Check if options for folder path are set, if not set it here..
   if (is.null(getOption('nat.jrcbrains.regfolder'))){
       options(nat.jrcbrains.regfolder='/GD/projects/JFRC/JohnBogovic/jrc-2018-brain-templates')}
@@ -8,16 +19,16 @@ download_saalfeldlab_registrations <- function() {
       dir.create(options('nat.jrcbrains.regfolder')[[1]], recursive = TRUE, showWarnings = TRUE)
   }
   #Step3: Download the file to the folder..
-  utils::download.file("https://ndownloader.figshare.com/files/12919949?private_link=85b2f2e4f479c94441f2",
-                file.path(options('nat.jrcbrains.regfolder')[[1]], 'download_reg.zip'))
-  utils::unzip(file.path(options('nat.jrcbrains.regfolder')[[1]], 'download_reg.zip'),
-        exdir = options('nat.jrcbrains.regfolder')[[1]])
-  unlink(file.path(options('nat.jrcbrains.regfolder')[[1]], 'download_reg.zip'))
+  utils::download.file(download_url,file.path(options('nat.jrcbrains.regfolder')[[1]], download_filename))
+  if (download_filename == 'download_reg.zip'){
+      utils::unzip(file.path(options('nat.jrcbrains.regfolder')[[1]], download_filename),
+                    exdir = options('nat.jrcbrains.regfolder')[[1]])
+      unlink(file.path(options('nat.jrcbrains.regfolder')[[1]], download_filename))}
 
   #Step4: Put them in a specific project folder..
   file_name <- list.files(path = options('nat.jrcbrains.regfolder')[[1]],
-                         pattern = "0GenericAffine.mat$", recursive = TRUE)
-  matchnames <- stringr::str_match(file_name, "^([^_]+)_([^_]+)0GenericAffine.mat$")
+                         pattern = search_pattern, recursive = TRUE)
+  matchnames <- stringr::str_match(file_name, paste0("^([^_]+)_([^_]+)",search_pattern))
   folder_name <- paste0(matchnames[2],'_',matchnames[3])
   folder_path <- file.path(options('nat.jrcbrains.regfolder')[[1]],folder_name)
   dir.create(folder_path, recursive = FALSE, showWarnings = TRUE)
