@@ -4,6 +4,19 @@ nat.jrcbrains allows bridging registrations for Drosophila brains from Janelia R
 to be used with the [NeuroAnatomy Toolbox](https://jefferis.github.io/nat/) suite
 of R packages.
 
+
+
+## Prerequisites
+
+### ANTs format
+If you intend to use registrations in `ANTs` format, then follow the below instructions.
+Before the installation of nat.jrcbrains you need to have `ANTsRCore` and its dependencies installed, otherwise you will get an error message about `ANTsRCore` installation. To install `ANTsRCore` try 
+`Method 1: with devtools in R` from the following URL.
+```
+https://github.com/ANTsX/ANTsR#installation-from-source
+```
+Furthermore also install [nat.ants](https://github.com/jefferis/nat.ants)
+
 ## Installation
 
 You can install the development version of nat.jrcbrains from GitHub:
@@ -11,15 +24,6 @@ You can install the development version of nat.jrcbrains from GitHub:
 ``` r
 devtools::install_github('jefferis/nat.jrcbrains')
 ```
-If you get error messages during installtion about `ANTsRCore` then try the following:
-
-```
-source("https://neuroconductor.org/neurocLite.R")
-neuro_install('ANTsRCore')
-```
-before installing the *nat.jrcbrains*. See the 
-[nat.ants](https://github.com/jefferis/nat.ants) and
-[ANTsRCore](https://github.com/ANTsX/ANTsRCore) packages for details.
 
 ## Example
 
