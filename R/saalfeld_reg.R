@@ -27,7 +27,7 @@ download_saalfeldlab_registrations <- function(fileformat = c('.h5', '.nii')) {
 
   #Step1: Check if options for folder path are set, if not set it here..
   if (is.null(getOption('nat.jrcbrains.regfolder'))){
-    options(nat.jrcbrains.regfolder='/GD/projects/JFRC/JohnBogovic/jrc-2018-brain-templates')}
+    options(nat.jrcbrains.regfolder=rappdirs::user_data_dir('R/nat.jrcbrains'))}
   #Step2: check if folder path exists..
   if (!dir.exists(getOption('nat.jrcbrains.regfolder'))){
     #Create the folder path now..
