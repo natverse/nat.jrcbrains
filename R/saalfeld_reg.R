@@ -1,4 +1,5 @@
-download_saalfeldlab_registrations <- function(fileformat = '.h5') {
+download_saalfeldlab_registrations <- function(fileformat = c('.h5', '.nii')) {
+  fileformat=match.arg(fileformat)
 
   if (fileformat == '.nii'){
     #Support for JRC2018F_FAFB, JRC2018F_JFRC2013, JRC2018F_FCWB
