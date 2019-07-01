@@ -29,21 +29,21 @@ download_saalfeldlab_registrations <- function(fileformat = c('.h5', '.nii')) {
   if (is.null(getOption('nat.jrcbrains.regfolder'))){
     options(nat.jrcbrains.regfolder='/GD/projects/JFRC/JohnBogovic/jrc-2018-brain-templates')}
   #Step2: check if folder path exists..
-  if (!dir.exists(options('nat.jrcbrains.regfolder')[[1]])){
+  if (!dir.exists(getOption('nat.jrcbrains.regfolder'))){
     #Create the folder path now..
-    dir.create(options('nat.jrcbrains.regfolder')[[1]], recursive = TRUE, showWarnings = TRUE)
+    dir.create(getOption('nat.jrcbrains.regfolder'), recursive = TRUE, showWarnings = TRUE)
   }
   #Step3: Download the files to the folder..
   for (download_fileidx in 1:length(download_urls)){
-    cat("Processing: ", download_urls[download_fileidx])
-    cat("\n")
+    message("Processing: ", download_urls[download_fileidx],
+            " (file ", download_fileidx, "/", length(download_urls), ")")
     utils::download.file(download_urls[download_fileidx],
-                         file.path(options('nat.jrcbrains.regfolder')[[1]],
+                         file.path(getOption('nat.jrcbrains.regfolder'),
                                    download_filename[download_fileidx]))
     if (download_filename[download_fileidx] == 'download_reg.zip') {
-      utils::unzip(file.path(options('nat.jrcbrains.regfolder')[[1]],
+      utils::unzip(file.path(getOption('nat.jrcbrains.regfolder'),
                              download_filename[download_fileidx]),
-                   exdir = options('nat.jrcbrains.regfolder')[[1]])
+                   exdir = getOption('nat.jrcbrains.regfolder'))
       unlink(file.path(options('nat.jrcbrains.regfolder')[[1]],
                        download_filename[download_fileidx]))
     }
