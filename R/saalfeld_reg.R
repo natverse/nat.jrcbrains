@@ -1,6 +1,98 @@
-download_saalfeldlab_registrations <- function() {
-  stop("Not yet implemented")
-  # download.file("https://ndownloader.figshare.com/files/12919949?private_link=85b2f2e4f479c94441f2")
+#' Download Saalfeld Lab registrations
+#'
+#' @param fileformat whether to download h5 (Saalfeld) or nii (ANTs) format
+#'   registrations (defaults to h5).
+#'
+#' @details Registrations will be downloaded from
+#'   \url{https://www.janelia.org/open-science/jrc-2018-brain-templates}. They
+#'   will be downloaded to a folder defined by the package option
+#'   \code{nat.templatebrains.regdirs} (see examples).
+#'
+#'   The h5 registration format typically provides a multi-resolution forward
+#'   and inverse transformations in an efficiently compressed format. See
+#'   \url{https://github.com/saalfeldlab/template-building/wiki/Hdf5-Deformation-fields}
+#'    for further details.
+#'
+#'   The nii (NIfTI) files are the raw output format of the ANTs registration
+#'   package. Their disadvantages are that they are 1) large files and the whole
+#'   >500 Mb registration file must be loaded completely into memory before any
+#'   transformations are possible, 2) that they depend on a more complex set of
+#'   packages that can be hard to install, 3) is not simple to downsample to
+#'   make smaller files. They do have the advantage of support for transforming
+#'   image data as well as 3D points.
+#'
+#'
+#' @export
+#' @importFrom rappdirs user_data_dir
+#' @importFrom curl curl_download
+#' @examples
+#' regroot=getOption('nat.templatebrains.regdirs')
+#' dir(regroot)
+download_saalfeldlab_registrations <- function(fileformat = c('.h5', '.nii')) {
+  fileformat=match.arg(fileformat)
+
+  if (fileformat == '.nii'){
+    #Support for JRC2018F_FAFB, JRC2018F_JFRC2013, JRC2018F_FCWB
+    download_urls <- c("https://ndownloader.figshare.com/files/12919949?private_link=85b2f2e4f479c94441f2",
+                       "https://ndownloader.figshare.com/files/12919832?private_link=a15a5cc56770ec340366",
+                       "https://ndownloader.figshare.com/files/12919868?private_link=6702242e17c564229874")
+
+    download_filename <- rep('download_reg.zip', length(download_urls))
+    search_pattern <- c("0GenericAffine.mat$","GenericAffine.mat$","0GenericAffine.mat$")
+    regexpattern <- c("^([^_]+)_([^_]+)",
+                      "^([^_]+)_([^_]+)_",
+                      "^([^_]+)_([^_]+)_")
+  } else if (fileformat == '.h5'){
+    #Support for JRC2018F_FAFB, JRC2018F_JFRC2013, JRC2018F_FCWB
+    download_urls <- c("https://ndownloader.figshare.com/files/14362754?private_link=3a8b1d84c5e197edc97c",
+                       "https://ndownloader.figshare.com/files/14368703?private_link=2a684586d5014e31076c",
+                       "https://ndownloader.figshare.com/files/14369093?private_link=d5965dad295e46241ae1")
+
+    download_filename <- c('JRC2018F_FAFB.h5','JRC2018F_JFRC2013.h5', 'JRC2018F_FCWB.h5')
+    search_pattern <- rep(".h5$", length(download_urls))
+    regexpattern <- c("^([^_]+)_([^_]+)",
+                      "^([^_]+)_([^_]+)",
+                      "^([^_]+)_([^_]+)")
+  }
+
+  #Step 1: check if folder path exists..
+  if (!dir.exists(getOption('nat.jrcbrains.regfolder'))){
+    message("Creating folder: ", getOption('nat.jrcbrains.regfolder'))
+    dir.create(getOption('nat.jrcbrains.regfolder'), recursive = TRUE, showWarnings = FALSE)
+  }
+
+  #Step 2: Download the files to the folder..
+  if(length(download_urls))
+    message("Downloading files to: ", getOption('nat.jrcbrains.regfolder'))
+  for (download_fileidx in 1:length(download_urls)){
+    message("Processing: ", download_filename[download_fileidx],
+            " (file ", download_fileidx, "/", length(download_urls), ")")
+    curl_download(download_urls[download_fileidx],
+                  file.path(getOption('nat.jrcbrains.regfolder'),
+                            download_filename[download_fileidx]),
+                  quiet=FALSE)
+    if (download_filename[download_fileidx] == 'download_reg.zip') {
+      utils::unzip(file.path(getOption('nat.jrcbrains.regfolder'),
+                             download_filename[download_fileidx]),
+                   exdir = getOption('nat.jrcbrains.regfolder'))
+      unlink(file.path(getOption('nat.jrcbrains.regfolder'),
+                       download_filename[download_fileidx]))
+    }
+
+    file_name <- list.files(path = getOption('nat.jrcbrains.regfolder'),
+                            pattern = search_pattern[download_fileidx], recursive = FALSE)
+    matchnames <- stringr::str_match(file_name, paste0(regexpattern[download_fileidx],
+                                                       search_pattern[download_fileidx]))
+    folder_name <- paste0(matchnames[2],'_',matchnames[3])
+    folder_path <- file.path(getOption('nat.jrcbrains.regfolder'),folder_name)
+    dir.create(folder_path, recursive = FALSE, showWarnings = FALSE)
+
+    files_target <- setdiff(list.files(getOption('nat.jrcbrains.regfolder'),folder_name),
+                            folder_name)
+    result <- file.copy(file.path(getOption('nat.jrcbrains.regfolder'),files_target),
+              file.path(getOption('nat.jrcbrains.regfolder'),folder_name))
+    unlink(file.path(getOption('nat.jrcbrains.regfolder'),files_target))
+  }
 }
 
 #' Register Saalfeld Lab registrations with nat.templatebrains

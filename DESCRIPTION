@@ -16,6 +16,8 @@ Imports:
     nat.ants,
     nat.templatebrains,
     nat,
-    stringr
+    stringr,
+    rappdirs,
+    curl
 Remotes: jefferis/nat.ants
 RoxygenNote: 6.1.1
