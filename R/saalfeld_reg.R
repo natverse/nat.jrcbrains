@@ -37,9 +37,10 @@ download_saalfeldlab_registrations <- function(fileformat = c('.h5', '.nii')) {
   for (download_fileidx in 1:length(download_urls)){
     message("Processing: ", download_urls[download_fileidx],
             " (file ", download_fileidx, "/", length(download_urls), ")")
-    utils::download.file(download_urls[download_fileidx],
-                         file.path(getOption('nat.jrcbrains.regfolder'),
-                                   download_filename[download_fileidx]))
+    curl_download(download_urls[download_fileidx],
+                  file.path(getOption('nat.jrcbrains.regfolder'),
+                            download_filename[download_fileidx]),
+                  quiet=FALSE)
     if (download_filename[download_fileidx] == 'download_reg.zip') {
       utils::unzip(file.path(getOption('nat.jrcbrains.regfolder'),
                              download_filename[download_fileidx]),
