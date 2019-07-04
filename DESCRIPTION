@@ -13,11 +13,13 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports: 
-    nat.ants,
     nat.templatebrains,
     nat,
+    nat.h5reg,
     stringr,
     rappdirs,
     curl
-Remotes: jefferis/nat.ants
+Suggests: nat.ants
+Remotes: jefferis/nat.h5reg,
+    jefferis/nat.ants
 RoxygenNote: 6.1.1
