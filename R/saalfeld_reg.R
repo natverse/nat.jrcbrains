@@ -136,11 +136,7 @@ register_saalfeldlab_registrations <- function(x=getOption('nat.jrcbrains.regfol
 #' @importFrom nat.templatebrains add_reglist
 add_saalfeldlab_reglist <- function(x, ...) {
   check_ants()
-  ar = try(nat.ants::as.antsreg(x), silent = TRUE)
-  if (inherits(ar, 'try-error')) {
-    warning(x, " does not seem to be an ANTs registration folder!")
-    return(FALSE)
-  }
+  reg=foldertoreg(x)
   bx = basename(x)
   brainnames = stringr::str_match(bx, "^([^_]+)_([^_]+)$")
   if (any(is.na(brainnames))) {
@@ -164,21 +160,41 @@ add_saalfeldlab_reglist <- function(x, ...) {
                 sample = "JFRC2")
   }
 
-  add_reglist(reglist(ar),
+  add_reglist(reglist(reg),
               reference = brainnames[2],
               sample = brainnames[3], ...)
-  ar2 = try(nat.ants::as.antsreg(x, inverse = TRUE), silent = TRUE)
-  if (inherits(ar2, 'try-error')) {
-    warning(x, " does not seem to contain a valid inverse ANTs registration!")
-    return(FALSE)
-  }
-  add_reglist(reglist(ar2),
+  message("Adding ",class(reg) ," in " , "forward direction")
+  reg2=foldertoreg(x, inverse = TRUE)
+
+  add_reglist(reglist(reg2),
               reference = brainnames[3],
               sample = brainnames[2],
               ...)
+  message("Adding ",class(reg2) ," in " , "reverse direction")
   TRUE
 }
 #
+
+foldertoreg <- function(folder, inverse=FALSE){
+  ff = dir(folder, full.names = TRUE)
+  exts= tools::file_ext(ff)
+  if(any('h5' %in% exts)){
+    h5file=ff[exts=='h5']
+
+    if(length(h5file) >1)
+      message("More than one .h5 file is present in ", folder)
+    reg=nat.h5reg::h5reg(h5file, swap=inverse)
+  } else {
+    check_ants()
+    reg = try(nat.ants::as.antsreg(folder, inverse=inverse), silent = TRUE)
+    if (inherits(reg, 'try-error')) {
+      stop(folder, " does not seem to be a valid",
+           ifelse(inverse, "inverse", "forward"),
+           "ANTs registration folder!")
+    }
+  }
+  reg
+}
 
 check_ants <- function() {
   if(!requireNamespace('nat.ants', quietly = TRUE))
