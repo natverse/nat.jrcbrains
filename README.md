@@ -6,17 +6,6 @@ of R packages.
 
 
 
-## Prerequisites
-
-### ANTs format
-If you intend to use registrations in `ANTs` format, then follow the below instructions.
-Before the installation of nat.jrcbrains you need to have `ANTsRCore` and its dependencies installed, otherwise you will get an error message about `ANTsRCore` installation. To install `ANTsRCore` try 
-`Method 1: with devtools in R` from the following URL.
-```
-https://github.com/ANTsX/ANTsR#installation-from-source
-```
-Furthermore also install [nat.ants](https://github.com/jefferis/nat.ants)
-
 ## Installation
 
 You can install the development version of nat.jrcbrains from GitHub:
@@ -35,19 +24,28 @@ To run this example you will need *JRC 2018 Female - JFRC 2010*.
 
 ``` r
 library(nat.jrcbrains)
-
-# setup
-options(nat.jrcbrains.regfolder='/path/to/jrc-2018-brain-templates')
-register_saalfeldlab_registrations()
-
+download_
 # use
 library(nat.templatebrains)
 # sample neurons in JFRC2 space
 pd2a = read.neurons("https://ars.els-cdn.com/content/image/1-s2.0-S0896627318307426-mmc5.zip")
 pd2a.fafb14=xform_brain(pd2a, sample=JFRC2, reference=FAFB14)
 ```
+## Registration Formats
+By default `nat.jrcbrains` will use registrations in the 
+[Saalfeld h5 format](https://github.com/saalfeldlab/template-building/wiki/Hdf5-Deformation-fields).
+As an end user, support for these registrations should be installed transparently
+when you install `nat.jrcbrains`.
 
-## See
+### ANTs format registrations
+If you intend to use registrations in `ANTs` format, then you will need to install
+the suggested [nat.ants](https://github.com/jefferis/nat.ants) package. 
+This is turn has additional dependencies that can be hard to install. 
+You may need to install `ANTsRCore` directly try. We have had succes with
+following the instructions in *Method 1: with devtools in R* section from 
+the following URL: https://github.com/ANTsX/ANTsR#installation-from-source.
+
+## See also
 
 This is a thin wrapper for bridging registrations developed by John Bogovic
 in [Stephan Saalfeld's lab](https://www.janelia.org/lab/saalfeld-lab) at Janelia.

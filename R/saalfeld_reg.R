@@ -32,6 +32,7 @@ download_saalfeldlab_registrations <- function(fileformat = c('.h5', '.nii')) {
   fileformat=match.arg(fileformat)
 
   if (fileformat == '.nii'){
+    check_ants()
     #Support for JRC2018F_FAFB, JRC2018F_JFRC2013, JRC2018F_FCWB
     download_urls <- c("https://ndownloader.figshare.com/files/12919949?private_link=85b2f2e4f479c94441f2",
                        "https://ndownloader.figshare.com/files/12919832?private_link=a15a5cc56770ec340366",
@@ -133,9 +134,9 @@ register_saalfeldlab_registrations <- function(x=getOption('nat.jrcbrains.regfol
 #'
 #' @importFrom nat reglist
 #' @importFrom nat.templatebrains add_reglist
-#' @importFrom nat.ants as.antsreg
 add_saalfeldlab_reglist <- function(x, ...) {
-  ar = try(as.antsreg(x), silent = TRUE)
+  check_ants()
+  ar = try(nat.ants::as.antsreg(x), silent = TRUE)
   if (inherits(ar, 'try-error')) {
     warning(x, " does not seem to be an ANTs registration folder!")
     return(FALSE)
@@ -166,7 +167,7 @@ add_saalfeldlab_reglist <- function(x, ...) {
   add_reglist(reglist(ar),
               reference = brainnames[2],
               sample = brainnames[3], ...)
-  ar2 = try(as.antsreg(x, inverse = TRUE), silent = TRUE)
+  ar2 = try(nat.ants::as.antsreg(x, inverse = TRUE), silent = TRUE)
   if (inherits(ar2, 'try-error')) {
     warning(x, " does not seem to contain a valid inverse ANTs registration!")
     return(FALSE)
@@ -178,3 +179,9 @@ add_saalfeldlab_reglist <- function(x, ...) {
   TRUE
 }
 #
+
+check_ants <- function() {
+  if(!requireNamespace('nat.ants', quietly = TRUE))
+    stop("You must install the nat.ants package in order to use ANTs (nii) format registrations!\n",
+         "Please see https://github.com/jefferis/nat.ants for details")
+}
