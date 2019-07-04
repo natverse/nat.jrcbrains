@@ -12,6 +12,8 @@ Description: Packaged version of registrations linking different Drosophila
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+Depends:
+    nat.flybrains
 Imports: 
     nat.templatebrains,
     nat,
