@@ -135,13 +135,13 @@ register_saalfeldlab_registrations <- function(x=getOption('nat.jrcbrains.regfol
 #' @importFrom nat reglist
 #' @importFrom nat.templatebrains add_reglist
 add_saalfeldlab_reglist <- function(x, ...) {
-  check_ants()
   reg=foldertoreg(x)
   bx = basename(x)
+  status <-  FALSE
   brainnames = stringr::str_match(bx, "^([^_]+)_([^_]+)$")
   if (any(is.na(brainnames))) {
     warning("Unable to identify the brain spaces linked by: ", bx)
-    return(FALSE)
+    return(status)
   }
 
   # These registrations all assume that FAFB is calibrate in microns,
@@ -171,7 +171,7 @@ add_saalfeldlab_reglist <- function(x, ...) {
               sample = brainnames[2],
               ...)
   message("Adding ",class(reg2) ," in " , "reverse direction")
-  TRUE
+  status <-  TRUE
 }
 #
 
@@ -200,4 +200,9 @@ check_ants <- function() {
   if(!requireNamespace('nat.ants', quietly = TRUE))
     stop("You must install the nat.ants package in order to use ANTs (nii) format registrations!\n",
          "Please see https://github.com/jefferis/nat.ants for details")
+}
+
+delete_saalfeldlab_registrations <- function(){
+  x=getOption('nat.jrcbrains.regfolder')
+  unlink(file.path(x,'.'),recursive = TRUE)
 }
