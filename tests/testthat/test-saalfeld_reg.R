@@ -71,20 +71,16 @@ test_that("Check if downsampled h5 registrations can be used", {
   expect_warning(
     test.pts.jrc2018f <- nat.templatebrains::xform_brain(
       test.pts.fafb,
-      sample =
-        elmr::FAFB,
-      reference =
-        nat.flybrains::JRC2018F),
-    'using default registration level: 0')
+      sample = 'FAFB14',
+      reference = nat.flybrains::JRC2018F),
+    'using default registration level: 2')
   expect_warning(
     test.pts.fafb.t <- nat.templatebrains::xform_brain(test.pts.jrc2018f,
                                                        sample=nat.flybrains::JRC2018F,
-                                                       reference=elmr::FAFB,swap=TRUE),
+                                                       reference='FAFB14',swap=TRUE),
                  'using default registration level: 2')
 
-  #Should be changed to tolerance = 0.0001 once the issue of bridging registrations is fixed
-  expect_equal(as.matrix(test.pts.fafb),as.matrix(test.pts.fafb.t),tolerance = 0.1)
-
+  expect_equal(as.matrix(test.pts.fafb),as.matrix(test.pts.fafb.t),tolerance = 0.0001)
 })
 
 message("Reg folder is: ", getOption('nat.jrcbrains.regfolder'))
