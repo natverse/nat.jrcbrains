@@ -32,6 +32,7 @@ download_saalfeldlab_registrations <- function(fileformat = c('.h5', '.nii')) {
   fileformat=match.arg(fileformat)
 
   if (fileformat == '.nii'){
+    check_ants()
     #Support for JRC2018F_FAFB, JRC2018F_JFRC2013, JRC2018F_FCWB
     download_urls <- c("https://ndownloader.figshare.com/files/12919949?private_link=85b2f2e4f479c94441f2",
                        "https://ndownloader.figshare.com/files/12919832?private_link=a15a5cc56770ec340366",
@@ -121,8 +122,12 @@ register_saalfeldlab_registrations <- function(x=getOption('nat.jrcbrains.regfol
   if(is.null(x)) stop("You must pass a folder containing registrations or set\n",
                       "options(nat.jrcbrains.regfolder='/path/to/reg/folder')")
 
-  dirs=list.dirs(x, recursive = F)
+  dirs=list_saalfeldlab_registrations(x)
   sapply(dirs, add_saalfeldlab_reglist, ...)
+}
+
+list_saalfeldlab_registrations <- function(x=getOption('nat.jrcbrains.regfolder')) {
+  list.dirs(x, recursive = F)
 }
 
 #' Register single ANTs registration folder
@@ -133,18 +138,14 @@ register_saalfeldlab_registrations <- function(x=getOption('nat.jrcbrains.regfol
 #'
 #' @importFrom nat reglist
 #' @importFrom nat.templatebrains add_reglist
-#' @importFrom nat.ants as.antsreg
 add_saalfeldlab_reglist <- function(x, ...) {
-  ar = try(as.antsreg(x), silent = TRUE)
-  if (inherits(ar, 'try-error')) {
-    warning(x, " does not seem to be an ANTs registration folder!")
-    return(FALSE)
-  }
+  reg=foldertoreg(x)
   bx = basename(x)
+  status <-  FALSE
   brainnames = stringr::str_match(bx, "^([^_]+)_([^_]+)$")
   if (any(is.na(brainnames))) {
     warning("Unable to identify the brain spaces linked by: ", bx)
-    return(FALSE)
+    return(status)
   }
 
   # These registrations all assume that FAFB is calibrate in microns,
@@ -163,18 +164,49 @@ add_saalfeldlab_reglist <- function(x, ...) {
                 sample = "JFRC2")
   }
 
-  add_reglist(reglist(ar),
+  add_reglist(reglist(reg),
               reference = brainnames[2],
               sample = brainnames[3], ...)
-  ar2 = try(as.antsreg(x, inverse = TRUE), silent = TRUE)
-  if (inherits(ar2, 'try-error')) {
-    warning(x, " does not seem to contain a valid inverse ANTs registration!")
-    return(FALSE)
-  }
-  add_reglist(reglist(ar2),
+  message("Adding ",class(reg) ," in " , "forward direction")
+  reg2=foldertoreg(x, inverse = TRUE)
+
+  add_reglist(reglist(reg2),
               reference = brainnames[3],
               sample = brainnames[2],
               ...)
-  TRUE
+  message("Adding ",class(reg2) ," in " , "reverse direction")
+  status <-  TRUE
 }
 #
+
+foldertoreg <- function(folder, inverse=FALSE){
+  ff = dir(folder, full.names = TRUE)
+  exts= tools::file_ext(ff)
+  if(any('h5' %in% exts)){
+    h5file=ff[exts=='h5']
+
+    if(length(h5file) >1)
+      message("More than one .h5 file is present in ", folder)
+    reg=nat.h5reg::h5reg(h5file, swap=inverse)
+  } else {
+    check_ants()
+    reg = try(nat.ants::as.antsreg(folder, inverse=inverse), silent = TRUE)
+    if (inherits(reg, 'try-error')) {
+      stop(folder, " does not seem to be a valid",
+           ifelse(inverse, "inverse", "forward"),
+           "ANTs registration folder!")
+    }
+  }
+  reg
+}
+
+check_ants <- function() {
+  if(!requireNamespace('nat.ants', quietly = TRUE))
+    stop("You must install the nat.ants package in order to use ANTs (nii) format registrations!\n",
+         "Please see https://github.com/jefferis/nat.ants for details")
+}
+
+delete_saalfeldlab_registrations <- function(){
+  x=getOption('nat.jrcbrains.regfolder')
+  unlink(file.path(x,'.'),recursive = TRUE)
+}

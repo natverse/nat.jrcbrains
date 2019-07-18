@@ -1,9 +1,11 @@
+
 .onLoad <- function(libname, pkgname) {
 
   if (is.null(getOption('nat.jrcbrains.regfolder'))){
     options(nat.jrcbrains.regfolder=rappdirs::user_data_dir('R/nat.jrcbrains'))
   }
 
+  suppressMessages(register_saalfeldlab_registrations())
   invisible()
 }
 

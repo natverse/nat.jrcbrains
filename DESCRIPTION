@@ -1,6 +1,6 @@
 Package: nat.jrcbrains
 Title: Janelia Research Campus Bridging Registrations for Drosophila Brains
-Version: 0.0.0.9000
+Version: 0.1
 Authors@R: 
     person(given = "Gregory",
            family = "Jefferis",
@@ -12,12 +12,18 @@ Description: Packaged version of registrations linking different Drosophila
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+Depends:
+    nat.flybrains
 Imports: 
-    nat.ants,
     nat.templatebrains,
     nat,
+    nat.h5reg,
     stringr,
     rappdirs,
     curl
-Remotes: jefferis/nat.ants
+Suggests: nat.ants,
+    testthat,
+    spelling
+Remotes: jefferis/nat.h5reg,
+    jefferis/nat.ants
 RoxygenNote: 6.1.1
