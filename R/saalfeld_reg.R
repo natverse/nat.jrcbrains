@@ -122,8 +122,12 @@ register_saalfeldlab_registrations <- function(x=getOption('nat.jrcbrains.regfol
   if(is.null(x)) stop("You must pass a folder containing registrations or set\n",
                       "options(nat.jrcbrains.regfolder='/path/to/reg/folder')")
 
-  dirs=list.dirs(x, recursive = F)
+  dirs=list_saalfeldlab_registrations(x)
   sapply(dirs, add_saalfeldlab_reglist, ...)
+}
+
+list_saalfeldlab_registrations <- function(x=getOption('nat.jrcbrains.regfolder')) {
+  list.dirs(x, recursive = F)
 }
 
 #' Register single ANTs registration folder

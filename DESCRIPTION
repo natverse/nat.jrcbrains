@@ -13,6 +13,7 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Depends:
+    nat.flybrains
 Imports: 
     nat.templatebrains,
     nat,
@@ -21,7 +22,8 @@ Imports:
     rappdirs,
     curl
 Suggests: nat.ants,
-    testthat
+    testthat,
+    spelling
 Remotes: jefferis/nat.h5reg,
     jefferis/nat.ants
 RoxygenNote: 6.1.1
