@@ -42,15 +42,28 @@ test_that("Check if h5 registration files can be downloaded", {
 
 
 test_that("Check if high resolution h5 registrations can be used", {
-  skip("Skip it")
   skip_on_cran()
   skip_on_travis()
-  skip_if_offline()
+  status <- register_saalfeldlab_registrations()
+  regnames <- basename(names(status))
 
-  status <- register_saalfeldlab_registrations(type='.h5')
-  skip_if_not()
   expect_equal(length(names(status)), length(status == TRUE)) #Check if all transforms were registered
 
+  #JRC2018F_FAFB
+  expect_warning(
+    test.pts.jrc2018f <- nat.templatebrains::xform_brain(
+      test.pts.fafb,
+      sample = 'FAFB14',
+      reference = nat.flybrains::JRC2018F),
+    'using default registration level: 0')
+  expect_warning(
+    test.pts.fafb.t <- nat.templatebrains::xform_brain(test.pts.jrc2018f,
+                                                       sample=nat.flybrains::JRC2018F,
+                                                       reference='FAFB14',swap=TRUE),
+    'using default registration level: 0')
+
+  dists=sqrt(rowSums((as.matrix(test.pts.fafb)-as.matrix(test.pts.fafb.t))^2))
+  expect_lt(mean(dists), 20) # 200 nm
 })
 
 
@@ -80,7 +93,8 @@ test_that("Check if downsampled h5 registrations can be used", {
                                                        reference='FAFB14',swap=TRUE),
                  'using default registration level: 2')
 
-  expect_equal(as.matrix(test.pts.fafb),as.matrix(test.pts.fafb.t),tolerance = 0.0001)
+  dists=sqrt(rowSums((as.matrix(test.pts.fafb)-as.matrix(test.pts.fafb.t))^2))
+  expect_lt(mean(dists), 43) # 200 nm
 })
 
 message("Reg folder is: ", getOption('nat.jrcbrains.regfolder'))
