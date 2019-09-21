@@ -2,3 +2,8 @@
 ^nat\.jrcbrains\.Rproj$
 ^\.Rproj\.user$
 ^samples$
+^\.github$
+^\.travis\.yml$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$

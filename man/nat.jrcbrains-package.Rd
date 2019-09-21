@@ -14,6 +14,14 @@ Once the appropriate registrations have been downloaded, loading the
 package is sufficient to make them available to end users / other packages.
 See \code{\link{register_saalfeldlab_registrations}}.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/jefferis/nat.jrcbrains}
+  \item Report bugs at \url{https://github.com/jefferis/nat.jrcbrains/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: Gregory Jefferis \email{jefferis@gmail.com} (0000-0002-0587-9355)
 

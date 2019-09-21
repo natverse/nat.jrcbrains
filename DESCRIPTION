@@ -1,5 +1,6 @@
 Package: nat.jrcbrains
-Title: Janelia Research Campus Bridging Registrations for Drosophila Brains
+Title: Janelia Research Campus Bridging Registrations for
+    Drosophila Brains
 Version: 0.2
 Authors@R: 
     person(given = "Gregory",
@@ -7,24 +8,28 @@ Authors@R:
            role = c("aut", "cre"),
            email = "jefferis@gmail.com",
            comment = c(ORCID = "0000-0002-0587-9355"))
-Description: Packaged version of registrations linking different Drosophila
-    template brains.
+Description: Packaged version of registrations linking different
+    Drosophila template brains.
 License: MIT + file LICENSE
-Encoding: UTF-8
-LazyData: true
+URL: https://github.com/jefferis/nat.jrcbrains
+BugReports: https://github.com/jefferis/nat.jrcbrains/issues
 Depends:
     nat.flybrains
 Imports: 
-    nat.templatebrains,
+    curl,
     nat,
     nat.h5reg,
-    stringr,
+    nat.templatebrains,
     rappdirs,
-    curl
-Suggests: nat.ants,
-    testthat,
-    spelling
-Remotes: jefferis/nat.h5reg,
-    jefferis/nat.ants
+    stringr
+Suggests: 
+    nat.ants,
+    spelling,
+    testthat
+Remotes: 
+    jefferis/nat.ants,
+    jefferis/nat.h5reg
+Encoding: UTF-8
+LazyData: true
 RoxygenNote: 6.1.1
 Language: en-GB
