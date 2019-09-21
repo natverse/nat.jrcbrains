@@ -1,6 +1,6 @@
 Package: nat.jrcbrains
 Title: Janelia Research Campus Bridging Registrations for Drosophila Brains
-Version: 0.1
+Version: 0.2
 Authors@R: 
     person(given = "Gregory",
            family = "Jefferis",
