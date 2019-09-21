@@ -23,10 +23,12 @@ A named logical vector indicating which of the subfolders was
 Register Saalfeld Lab registrations with nat.templatebrains
 }
 \details{
-You must manually download the registrations from
-  \url{https://www.janelia.org/open-science/jrc-2018-brain-templates} to a
-  single folder. You may wish to set \code{nat.jrcbrains.regfolder} to point
-  to this folder in your \code{\link{Rprofile}}.
+You must download the registrations from
+  \url{https://www.janelia.org/open-science/jrc-2018-brain-templates} using
+  \code{\link{download_saalfeldlab_registrations}}. If you prefer you may
+  also download them manually to to a single folder, setting
+  \code{options(nat.jrcbrains.regfolder)} to point to this folder in your
+  \code{\link{Rprofile}}.
 }
 \examples{
 \dontrun{
@@ -36,4 +38,7 @@ register_saalfeldlab_registrations()
 }
 \references{
 See Bogovic et al. (2018) \url{https://doi.org/10.1101/376384}
+}
+\seealso{
+\code{\link{download_saalfeldlab_registrations}}
 }

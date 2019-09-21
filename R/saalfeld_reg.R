@@ -25,6 +25,7 @@
 #' @export
 #' @importFrom rappdirs user_data_dir
 #' @importFrom curl curl_download
+#' @seealso \code{\link{register_saalfeldlab_registrations}}
 #' @examples
 #' regroot=getOption('nat.templatebrains.regdirs')
 #' dir(regroot)
@@ -98,10 +99,12 @@ download_saalfeldlab_registrations <- function(fileformat = c('.h5', '.nii')) {
 
 #' Register Saalfeld Lab registrations with nat.templatebrains
 #'
-#' @details You must manually download the registrations from
-#'   \url{https://www.janelia.org/open-science/jrc-2018-brain-templates} to a
-#'   single folder. You may wish to set \code{nat.jrcbrains.regfolder} to point
-#'   to this folder in your \code{\link{Rprofile}}.
+#' @details You must download the registrations from
+#'   \url{https://www.janelia.org/open-science/jrc-2018-brain-templates} using
+#'   \code{\link{download_saalfeldlab_registrations}}. If you prefer you may
+#'   also download them manually to to a single folder, setting
+#'   \code{options(nat.jrcbrains.regfolder)} to point to this folder in your
+#'   \code{\link{Rprofile}}.
 #' @param x A folder containing downloaded Saalfeld lab registrations
 #' @param ... Additional arguments passed to
 #'   \code{\link{add_saalfeldlab_reglist}} and eventually to
@@ -109,6 +112,7 @@ download_saalfeldlab_registrations <- function(fileformat = c('.h5', '.nii')) {
 #'
 #' @return A named logical vector indicating which of the subfolders was
 #'   successfully registered with \code{\link{nat.templatebrains}}
+#' @seealso \code{\link{download_saalfeldlab_registrations}}
 #' @export
 #'
 #' @examples

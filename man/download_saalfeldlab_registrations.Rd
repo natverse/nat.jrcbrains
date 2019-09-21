@@ -36,3 +36,6 @@ Registrations will be downloaded from
 regroot=getOption('nat.templatebrains.regdirs')
 dir(regroot)
 }
+\seealso{
+\code{\link{register_saalfeldlab_registrations}}
+}
