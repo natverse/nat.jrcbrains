@@ -25,11 +25,16 @@ You must first download the registrations you want from
 
 * https://www.janelia.org/open-science/jrc-2018-brain-templates
 
-To run this example you will need *JRC 2018 Female - JFRC 2010*.
+This is most easily done as follows:
 
 ``` r
 library(nat.jrcbrains)
-download_
+download_saalfeldlab_registrations()
+```
+
+To run this example you will need *JRC 2018 Female - JFRC 2010*.
+
+``` r
 # use
 library(nat.templatebrains)
 # sample neurons in JFRC2 space
