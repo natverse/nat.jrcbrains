@@ -13,10 +13,12 @@ of R packages.
 
 ## Installation
 
-You can install the development version of nat.jrcbrains from GitHub:
+You can install the development version of nat.jrcbrains from GitHub
+using the remotes package (part of devtools):
 
 ``` r
-devtools::install_github('natverse/nat.jrcbrains')
+if (!requireNamespace("remotes")) install.packages("remotes")
+remotes::install_github('natverse/nat.jrcbrains')
 ```
 
 ## Example
@@ -35,7 +37,7 @@ download_saalfeldlab_registrations()
 To run this example you will need *JRC 2018 Female - JFRC 2010*.
 
 ``` r
-# use
+library(nat.jrcbrains)
 library(nat.templatebrains)
 # sample neurons in JFRC2 space
 pd2a = read.neurons("https://ars.els-cdn.com/content/image/1-s2.0-S0896627318307426-mmc5.zip")
