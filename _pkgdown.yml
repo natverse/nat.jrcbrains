@@ -24,7 +24,7 @@ navbar:
       href: news/index.html
     github:
       icon: fab fa-github fa-lg
-      href: https://github.com/jefferis/nat.jrcbrains
+      href: https://github.com/natverse/nat.jrcbrains
     natverse:
       text: natverse
       href: https://natverse.github.io

@@ -11,8 +11,8 @@ Authors@R:
 Description: Packaged version of registrations linking different
     Drosophila template brains.
 License: MIT + file LICENSE
-URL: https://github.com/jefferis/nat.jrcbrains
-BugReports: https://github.com/jefferis/nat.jrcbrains/issues
+URL: https://github.com/natverse/nat.jrcbrains
+BugReports: https://github.com/natverse/nat.jrcbrains/issues
 Depends:
     nat.flybrains
 Imports: 

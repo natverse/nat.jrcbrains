@@ -17,8 +17,8 @@ See \code{\link{register_saalfeldlab_registrations}}.
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/jefferis/nat.jrcbrains}
-  \item Report bugs at \url{https://github.com/jefferis/nat.jrcbrains/issues}
+  \item \url{https://github.com/natverse/nat.jrcbrains}
+  \item Report bugs at \url{https://github.com/natverse/nat.jrcbrains/issues}
 }
 
 }

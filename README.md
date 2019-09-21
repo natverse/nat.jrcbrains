@@ -1,12 +1,12 @@
 # nat.jrcbrains
 <!-- badges: start -->
 [![natverse](https://img.shields.io/badge/natverse-Part%20of%20the%20natverse-a241b6)](https://natverse.github.io)
-[![Docs](https://img.shields.io/badge/docs-100%25-brightgreen.svg)](https://jefferis.github.io/nat.jrcbrains/reference/)
-[![Travis build status](https://travis-ci.org/jefferis/nat.jrcbrains.svg?branch=master)](https://travis-ci.org/jefferis/nat.jrcbrains)
+[![Docs](https://img.shields.io/badge/docs-100%25-brightgreen.svg)](https://natverse.github.io/nat.jrcbrains/reference/)
+[![Travis build status](https://travis-ci.org/natverse/nat.jrcbrains.svg?branch=master)](https://travis-ci.org/natverse/nat.jrcbrains)
 <!-- badges: end -->
 
 nat.jrcbrains allows bridging registrations for Drosophila brains from Janelia Research Campus
-to be used with the [NeuroAnatomy Toolbox](https://jefferis.github.io/nat/) suite
+to be used with the [NeuroAnatomy Toolbox](https://natverse.github.io/nat/) suite
 of R packages.
 
 
@@ -16,7 +16,7 @@ of R packages.
 You can install the development version of nat.jrcbrains from GitHub:
 
 ``` r
-devtools::install_github('jefferis/nat.jrcbrains')
+devtools::install_github('natverse/nat.jrcbrains')
 ```
 
 ## Example
