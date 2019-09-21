@@ -41,7 +41,7 @@ when you install `nat.jrcbrains`.
 If you intend to use registrations in `ANTs` format, then you will need to install
 the suggested [nat.ants](https://github.com/jefferis/nat.ants) package. 
 This is turn has additional dependencies that can be hard to install. 
-You may need to install `ANTsRCore` directly try. We have had succes with
+You may need to install `ANTsRCore` directly try. We have had success with
 following the instructions in *Method 1: with devtools in R* section from 
 the following URL: https://github.com/ANTsX/ANTsR#installation-from-source.
 
