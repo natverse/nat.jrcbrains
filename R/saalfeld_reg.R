@@ -67,7 +67,7 @@ download_saalfeldlab_registrations <- function(fileformat = c('.h5', '.nii')) {
         'JRC2018F_FAFB.h5',
         'JRC2018F_JFRC2013.h5',
         'JRC2018F_FCWB.h5',
-        'JRC2018F_JRC2018FIBF.h5'
+        'JRC2018F_JRCFIB2018F.h5'
       )
     search_pattern <- rep(".h5$", length(download_urls))
     regexpattern <- rep("^([^_]+)_([^_]+)", length(download_urls))
