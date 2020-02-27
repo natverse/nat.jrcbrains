@@ -41,7 +41,7 @@ library(nat.jrcbrains)
 library(nat.templatebrains)
 # sample neurons in JFRC2 space
 pd2a = read.neurons("https://ars.els-cdn.com/content/image/1-s2.0-S0896627318307426-mmc5.zip")
-pd2a.fafb14=xform_brain(pd2a, sample=JFRC2, reference=FAFB14)
+pd2a.fafb14=xform_brain(pd2a, sample=JFRC2, reference="FAFB14")
 ```
 ## Registration Formats
 By default `nat.jrcbrains` will use registrations in the 
