@@ -4,9 +4,10 @@
 \alias{register_saalfeldlab_registrations}
 \title{Register Saalfeld Lab registrations with nat.templatebrains}
 \usage{
-
-  register_saalfeldlab_registrations(x = getOption("nat.jrcbrains.regfolder"),
-  ...)
+register_saalfeldlab_registrations(
+  x = getOption("nat.jrcbrains.regfolder"),
+  ...
+)
 }
 \arguments{
 \item{x}{A folder containing downloaded Saalfeld lab registrations}
