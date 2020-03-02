@@ -35,9 +35,15 @@ download_saalfeldlab_registrations <- function(fileformat = c('.h5', '.nii')) {
   if (fileformat == '.nii'){
     check_ants()
     #Support for JRC2018F_FAFB, JRC2018F_JFRC2013, JRC2018F_FCWB
-    download_urls <- c("https://ndownloader.figshare.com/files/12919949?private_link=85b2f2e4f479c94441f2",
-                       "https://ndownloader.figshare.com/files/12919832?private_link=a15a5cc56770ec340366",
-                       "https://ndownloader.figshare.com/files/12919868?private_link=6702242e17c564229874")
+    download_urls <-
+      paste0(
+        "https://ndownloader.figshare.com/files/",
+        c(
+          "12919949?private_link=85b2f2e4f479c94441f2",
+          "12919832?private_link=a15a5cc56770ec340366",
+          "12919868?private_link=6702242e17c564229874"
+        )
+      )
 
     download_filename <- rep('download_reg.zip', length(download_urls))
     search_pattern <- c("0GenericAffine.mat$","GenericAffine.mat$","0GenericAffine.mat$")
@@ -46,15 +52,25 @@ download_saalfeldlab_registrations <- function(fileformat = c('.h5', '.nii')) {
                       "^([^_]+)_([^_]+)_")
   } else if (fileformat == '.h5'){
     #Support for JRC2018F_FAFB, JRC2018F_JFRC2013, JRC2018F_FCWB
-    download_urls <- c("https://ndownloader.figshare.com/files/14362754?private_link=3a8b1d84c5e197edc97c",
-                       "https://ndownloader.figshare.com/files/14368703?private_link=2a684586d5014e31076c",
-                       "https://ndownloader.figshare.com/files/14369093?private_link=d5965dad295e46241ae1")
+    download_urls <- paste0(
+      "https://ndownloader.figshare.com/files/",
+      c(
+        "14362754?private_link=3a8b1d84c5e197edc97c",
+        "14368703?private_link=2a684586d5014e31076c",
+        "14369093?private_link=d5965dad295e46241ae1",
+        "21749535?private_link=ca603876efb33fdf3028"
+      )
+    )
 
-    download_filename <- c('JRC2018F_FAFB.h5','JRC2018F_JFRC2013.h5', 'JRC2018F_FCWB.h5')
+    download_filename <-
+      c(
+        'JRC2018F_FAFB.h5',
+        'JRC2018F_JFRC2013.h5',
+        'JRC2018F_FCWB.h5',
+        'JRC2018F_JRCFIB2018F.h5'
+      )
     search_pattern <- rep(".h5$", length(download_urls))
-    regexpattern <- c("^([^_]+)_([^_]+)",
-                      "^([^_]+)_([^_]+)",
-                      "^([^_]+)_([^_]+)")
+    regexpattern <- rep("^([^_]+)_([^_]+)", length(download_urls))
   }
 
   #Step 1: check if folder path exists..
