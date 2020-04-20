@@ -50,17 +50,15 @@ test_that("Check if high resolution h5 registrations can be used", {
   expect_equal(length(names(status)), length(status == TRUE)) #Check if all transforms were registered
 
   #JRC2018F_FAFB
-  expect_warning(
+  expect_silent(
     test.pts.jrc2018f <- nat.templatebrains::xform_brain(
       test.pts.fafb,
       sample = 'FAFB14',
-      reference = nat.flybrains::JRC2018F),
-    'using default registration level: 0')
-  expect_warning(
+      reference = nat.flybrains::JRC2018F))
+  expect_silent(
     test.pts.fafb.t <- nat.templatebrains::xform_brain(test.pts.jrc2018f,
                                                        sample=nat.flybrains::JRC2018F,
-                                                       reference='FAFB14',swap=TRUE),
-    'using default registration level: 0')
+                                                       reference='FAFB14',swap=TRUE))
 
   dists=sqrt(rowSums((as.matrix(test.pts.fafb)-as.matrix(test.pts.fafb.t))^2))
   expect_lt(mean(dists), 20) # 200 nm
@@ -81,17 +79,15 @@ test_that("Check if downsampled h5 registrations can be used", {
   expect_true(all(status))
 
   #JRC2018F_FAFB
-  expect_warning(
+  expect_silent(
     test.pts.jrc2018f <- nat.templatebrains::xform_brain(
       test.pts.fafb,
       sample = 'FAFB14',
-      reference = nat.flybrains::JRC2018F),
-    'using default registration level: 2')
-  expect_warning(
+      reference = nat.flybrains::JRC2018F))
+  expect_silent(
     test.pts.fafb.t <- nat.templatebrains::xform_brain(test.pts.jrc2018f,
                                                        sample=nat.flybrains::JRC2018F,
-                                                       reference='FAFB14',swap=TRUE),
-                 'using default registration level: 2')
+                                                       reference='FAFB14',swap=TRUE))
 
   dists=sqrt(rowSums((as.matrix(test.pts.fafb)-as.matrix(test.pts.fafb.t))^2))
   expect_lt(mean(dists), 43) # 200 nm

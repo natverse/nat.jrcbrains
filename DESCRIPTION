@@ -18,7 +18,7 @@ Depends:
 Imports: 
     curl,
     nat,
-    nat.h5reg,
+    nat.h5reg (>= 0.4.0),
     nat.templatebrains,
     rappdirs,
     stringr
