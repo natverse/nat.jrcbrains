@@ -14,7 +14,7 @@ License: MIT + file LICENSE
 URL: https://github.com/natverse/nat.jrcbrains
 BugReports: https://github.com/natverse/nat.jrcbrains/issues
 Depends:
-    nat.flybrains
+    nat.flybrains (>= 1.8.0)
 Imports: 
     curl,
     nat,
