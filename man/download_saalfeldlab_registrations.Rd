@@ -4,11 +4,22 @@
 \alias{download_saalfeldlab_registrations}
 \title{Download Saalfeld Lab registrations}
 \usage{
-download_saalfeldlab_registrations(fileformat = c(".h5", ".nii"))
+download_saalfeldlab_registrations(
+  fileformat = c(".h5", ".nii"),
+  activate = TRUE
+)
 }
 \arguments{
 \item{fileformat}{whether to download h5 (Saalfeld) or nii (ANTs) format
 registrations (defaults to h5).}
+
+\item{activate}{whether to activate any new bridging registrations
+immediately for use by \code{\link{xform_brain}} and friends (default
+\code{TRUE}).}
+}
+\value{
+A character vector naming any new registrations downloaded,
+  invisibly.
 }
 \description{
 Download Saalfeld Lab registrations

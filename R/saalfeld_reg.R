@@ -2,7 +2,11 @@
 #'
 #' @param fileformat whether to download h5 (Saalfeld) or nii (ANTs) format
 #'   registrations (defaults to h5).
-#'
+#' @param activate whether to activate any new bridging registrations
+#'   immediately for use by \code{\link{xform_brain}} and friends (default
+#'   \code{TRUE}).
+#' @return A character vector naming any new registrations downloaded,
+#'   invisibly.
 #' @details Registrations will be downloaded from
 #'   \url{https://www.janelia.org/open-science/jrc-2018-brain-templates}. They
 #'   will be downloaded to a folder defined by the package option
@@ -29,7 +33,8 @@
 #' @examples
 #' regroot=getOption('nat.templatebrains.regdirs')
 #' dir(regroot)
-download_saalfeldlab_registrations <- function(fileformat = c('.h5', '.nii')) {
+download_saalfeldlab_registrations <- function(fileformat = c('.h5', '.nii'),
+                                               activate=TRUE) {
   fileformat=match.arg(fileformat)
 
   if (fileformat == '.nii'){
@@ -81,6 +86,8 @@ download_saalfeldlab_registrations <- function(fileformat = c('.h5', '.nii')) {
     dir.create(getOption('nat.jrcbrains.regfolder'), recursive = TRUE, showWarnings = FALSE)
   }
 
+  updated=character()
+
   #Step 2: Download the files to the folder..
   if(length(download_urls))
     message("Downloading files to: ", getOption('nat.jrcbrains.regfolder'))
@@ -111,8 +118,16 @@ download_saalfeldlab_registrations <- function(fileformat = c('.h5', '.nii')) {
                             folder_name)
     result <- file.copy(file.path(getOption('nat.jrcbrains.regfolder'),files_target),
               file.path(getOption('nat.jrcbrains.regfolder'),folder_name))
+    if(any(result)){
+      updated=union(updated, files_target)
+    }
     unlink(file.path(getOption('nat.jrcbrains.regfolder'),files_target))
   }
+
+  if(isTRUE(activate) && length(updated)>0){
+    register_saalfeldlab_registrations()
+  }
+  invisible(updated)
 }
 
 #' Register Saalfeld Lab registrations with nat.templatebrains
