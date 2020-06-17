@@ -10,23 +10,27 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -37,7 +41,6 @@
 
 <meta property="og:title" content="Download Saalfeld Lab registrations — download_saalfeldlab_registrations" />
 <meta property="og:description" content="Download Saalfeld Lab registrations" />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -55,7 +58,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -69,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">nat.jrcbrains</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -123,7 +126,10 @@
     <p>Download Saalfeld Lab registrations</p>
     </div>
 
-    <pre class="usage"><span class='fu'>download_saalfeldlab_registrations</span>(<span class='kw'>fileformat</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>".h5"</span>, <span class='st'>".nii"</span>))</pre>
+    <pre class="usage"><span class='fu'>download_saalfeldlab_registrations</span>(
+  <span class='kw'>fileformat</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>".h5"</span>, <span class='st'>".nii"</span>),
+  <span class='kw'>activate</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -133,8 +139,18 @@
       <td><p>whether to download h5 (Saalfeld) or nii (ANTs) format
 registrations (defaults to h5).</p></td>
     </tr>
+    <tr>
+      <th>activate</th>
+      <td><p>whether to activate any new bridging registrations
+immediately for use by <code>xform_brain</code> and friends (default
+<code>TRUE</code>).</p></td>
+    </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A character vector naming any new registrations downloaded,
+  invisibly.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Registrations will be downloaded from
@@ -178,29 +194,26 @@ registrations (defaults to h5).</p></td>
 #&gt; [35] "JFRC2_FCWB.list"          "JFRC2_IBNWB.list"        
 #&gt; [37] "JFRC2_IBNWB.list"         "JFRC2_imgflip.list"      
 #&gt; [39] "JFRC2_IS2.list"           "JFRC2_IS2.list"          
-#&gt; [41] "JFRC2_JFRC2013.list"      "JFRC2_mirror.list"       
-#&gt; [43] "JFRC2_mirror.list"        "JFRC2013_JFRC2013DS.list"
-#&gt; [45] "JFRC2013_JFRC2014.list"   "JFRC2013_JRC2018F.rds"   
-#&gt; [47] "JFRC2013_mirror.list"     "JFRC2013DS_JFRC2013.list"
-#&gt; [49] "JFRC2014_JFRC2014DS.list" "JFRC2014DS_JFRC2014.list"
-#&gt; [51] "JRC2018F_FAFB14um.rds"    "JRC2018F_FCWB.rds"       
-#&gt; [53] "JRC2018F_JFRC2013.rds"    "JRC2018F_JRCFIB2018F.rds"
-#&gt; [55] "JRCFIB2018F_JRC2018F.rds" "README.md"               
-#&gt; [57] "README.md"                "README.md"               
-#&gt; [59] "T1_FCWB.list"             "T1_IS2.list"             
-#&gt; [61] "T1_JFRC2.list"            "T1_mirror.list"          
-#&gt; [63] "T1_mirror.list"           "V2_mirror.list"          
-#&gt; [65] "VNCIS1_mirror.list"       "VNCIS1_V2.list"          </div></pre>
+#&gt; [41] "JFRC2_JFRC2013.list"      "JFRC2_JRC2018F.rds"      
+#&gt; [43] "JFRC2_mirror.list"        "JFRC2_mirror.list"       
+#&gt; [45] "JFRC2013_JFRC2013DS.list" "JFRC2013_JFRC2014.list"  
+#&gt; [47] "JFRC2013_JRC2018F.rds"    "JFRC2013_mirror.list"    
+#&gt; [49] "JFRC2013DS_JFRC2013.list" "JFRC2014_JFRC2014DS.list"
+#&gt; [51] "JFRC2014DS_JFRC2014.list" "JRC2018F_FAFB14um.rds"   
+#&gt; [53] "JRC2018F_FCWB.rds"        "JRC2018F_JFRC2.rds"      
+#&gt; [55] "JRC2018F_JFRC2013.rds"    "JRC2018F_JRC2018U.rds"   
+#&gt; [57] "JRC2018F_JRCFIB2018F.rds" "JRC2018U_JRC2018F.rds"   
+#&gt; [59] "JRCFIB2018F_JRC2018F.rds" "README.md"               
+#&gt; [61] "README.md"                "README.md"               
+#&gt; [63] "T1_FCWB.list"             "T1_IS2.list"             
+#&gt; [65] "T1_JFRC2.list"            "T1_mirror.list"          
+#&gt; [67] "T1_mirror.list"           "V2_mirror.list"          
+#&gt; [69] "VNCIS1_mirror.list"       "VNCIS1_V2.list"          </div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#details">Details</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -211,7 +224,7 @@ registrations (defaults to h5).</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>
