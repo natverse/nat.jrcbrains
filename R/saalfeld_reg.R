@@ -58,13 +58,15 @@ download_saalfeldlab_registrations <- function(fileformat = c('.h5', '.nii'),
   } else if (fileformat == '.h5'){
     #Support for JRC2018F_FAFB, JRC2018F_JFRC2013, JRC2018F_FCWB, JRC2018U_JRC2018F
     download_urls <- paste0(
+
       "https://ndownloader.figshare.com/files/",
       c(
         "14362754?private_link=3a8b1d84c5e197edc97c",
         "14368703?private_link=2a684586d5014e31076c",
         "14369093?private_link=d5965dad295e46241ae1",
         "21749535?private_link=ca603876efb33fdf3028",
-        "14371574?private_link=b7120207f38b35f1e372"
+        "14371574?private_link=b7120207f38b35f1e372",
+        "14368358?private_link=b29e25b6e47ccf9187a8"
       )
     )
 
@@ -74,7 +76,8 @@ download_saalfeldlab_registrations <- function(fileformat = c('.h5', '.nii'),
         'JRC2018F_JFRC2013.h5',
         'JRC2018F_FCWB.h5',
         'JRC2018F_JRCFIB2018F.h5',
-        'JRC2018U_JRC2018F.h5'
+        'JRC2018U_JRC2018F.h5',
+        'JRC2018F_JFRC2010.h5'
       )
     search_pattern <- rep(".h5$", length(download_urls))
     regexpattern <- rep("^([^_]+)_([^_]+)", length(download_urls))
