@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">nat.jrcbrains</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
       </span>
     </div>
 
@@ -101,12 +101,14 @@
 <p>This is most easily done as follows:</p>
 <div class="sourceCode" id="cb2"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">nat.jrcbrains</span>)
 <span class="fu"><a href="reference/download_saalfeldlab_registrations.html">download_saalfeldlab_registrations</a></span>()</pre></div>
-<p>To run this example you will need <em>JRC 2018 Female - JFRC 2010</em>.</p>
+<p>To run this example you will need <em>JRC 2018 Female - JFRC 2010</em>, which is included as one of the downloaded bridging registrations since <a href="https://github.com/natverse/nat.jrcbrains/commit/ebe1b464200af0440fb582f9fa26f12063629250">v0.3.1</a></p>
 <div class="sourceCode" id="cb3"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">nat.jrcbrains</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">nat.templatebrains</span>)
 <span class="co"># sample neurons in JFRC2 space</span>
 <span class="no">pd2a</span> <span class="kw">=</span> <span class="fu">read.neurons</span>(<span class="st">"https://ars.els-cdn.com/content/image/1-s2.0-S0896627318307426-mmc5.zip"</span>)
-<span class="no">pd2a.fafb14</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/pkg/nat.templatebrains/man/xform_brain.html">xform_brain</a></span>(<span class="no">pd2a</span>, <span class="kw">sample</span><span class="kw">=</span><span class="no">JFRC2</span>, <span class="kw">reference</span><span class="kw">=</span><span class="st">"FAFB14"</span>)</pre></div>
+<span class="co"># note use of via argument to insist on higher quality bridging registration</span>
+<span class="co"># to FAFB14</span>
+<span class="no">pd2a.fafb14</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/pkg/nat.templatebrains/man/xform_brain.html">xform_brain</a></span>(<span class="no">pd2a</span>, <span class="kw">sample</span><span class="kw">=</span><span class="no">JFRC2</span>, <span class="kw">reference</span><span class="kw">=</span><span class="st">"FAFB14"</span>, <span class="kw">via</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"FAFB14um"</span>))</pre></div>
 </div>
 <div id="registration-formats" class="section level2">
 <h2 class="hasAnchor">
