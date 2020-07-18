@@ -34,14 +34,18 @@ library(nat.jrcbrains)
 download_saalfeldlab_registrations()
 ```
 
-To run this example you will need *JRC 2018 Female - JFRC 2010*.
+To run this example you will need *JRC 2018 Female - JFRC 2010*, which is
+included as one of the downloaded  bridging registrations since 
+[v0.3.1](https://github.com/natverse/nat.jrcbrains/commit/ebe1b464200af0440fb582f9fa26f12063629250)
 
 ``` r
 library(nat.jrcbrains)
 library(nat.templatebrains)
 # sample neurons in JFRC2 space
 pd2a = read.neurons("https://ars.els-cdn.com/content/image/1-s2.0-S0896627318307426-mmc5.zip")
-pd2a.fafb14=xform_brain(pd2a, sample=JFRC2, reference="FAFB14")
+# note use of via argument to insist on higher quality bridging registration
+# to FAFB14
+pd2a.fafb14=xform_brain(pd2a, sample=JFRC2, reference="FAFB14", via=c("FAFB14um"))
 ```
 ## Registration Formats
 By default `nat.jrcbrains` will use registrations in the 
