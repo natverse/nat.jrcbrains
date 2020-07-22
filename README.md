@@ -67,12 +67,29 @@ remotes::install_github("jefferis/nat.ants")
 
 should do the trick.
 
-## See also
+## Acknowledgements
 
-This is a thin wrapper for bridging registrations developed by John Bogovic
-in [Stephan Saalfeld's lab](https://www.janelia.org/lab/saalfeld-lab) at Janelia.
+This is a thin wrapper to allow convenient download and application of bridging
+registrations developed by John Bogovic in [Stephan Saalfeld's lab](https://www.janelia.org/lab/saalfeld-lab) at Janelia.
 See:
 
-* https://www.biorxiv.org/content/early/2018/07/25/376384
+* https://www.biorxiv.org/content/10.1101/376384v2
 
-for details and downloads
+*An unbiased template of the Drosophila brain and ventral nerve cord*. John A Bogovic, Hideo Otsuna, Larissa Heinrich, Masayoshi Ito, Jennifer Jeter, Geoffrey Meissner, Aljoscha Nern, Jennifer Colonell, Oz Malkesman, Kei Ito, Stephan Saalfeld
+bioRxiv 376384; doi:[10.1101/376384](https://doi.org/10.1101/376384)
+
+for details and additional downloads. **Please cite their paper if you make use of these registrations**.
+
+In addition if you make use of the infrastructure in this and other natverse packages, we would be grateful if you would cite:
+
+*The natverse, a versatile toolbox for combining and analysing neuroanatomical data.* A. S. Bates and J. D. Manton and S. R. Jagannathan and M. Costa and P. Schlegel and T. Rohlfing and G. S. X. E. Jefferis. eLife 9. doi:[10.7554/eLife.53350](https://doi.org/10.7554/eLife.53350)
+
+You can also get citation information from inside R for the natverse
+or individual packages like so:
+
+```r
+citation('natverse')
+citation('nat.jrcbrains')
+```
+
+Your citations will help support future tool development by the Saalfeld lab and ourselves.

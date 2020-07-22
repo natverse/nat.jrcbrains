@@ -2,14 +2,20 @@ Package: nat.jrcbrains
 Title: Janelia Research Campus Bridging Registrations for
     Drosophila Brains
 Version: 0.3.1
-Authors@R: 
+Authors@R:
     person(given = "Gregory",
-           family = "Jefferis",
-           role = c("aut", "cre"),
-           email = "jefferis@gmail.com",
-           comment = c(ORCID = "0000-0002-0587-9355"))
-Description: Packaged version of registrations linking different
-    Drosophila template brains.
+      family = "Jefferis",
+      role = c("aut", "cre"),
+      email = "jefferis@gmail.com",
+      comment = c(ORCID = "0000-0002-0587-9355"))
+Description: Provides convenient download and application of bridging 
+    registrations linking different Drosophila template brains. After download,
+    registrations can be applied to a range of data types using the `natverse` 
+    suite of tools and combined with a range of other bridging registrations.
+    These registrations were originally developed by John
+    Bogovic in the group of Stephan Saalfeld at HHMI Janelia Research Campus.
+    see the package README and <https://www.janelia.org/lab/saalfeld-lab> for
+    further details.
 License: MIT + file LICENSE
 URL: https://github.com/natverse/nat.jrcbrains
 BugReports: https://github.com/natverse/nat.jrcbrains/issues
