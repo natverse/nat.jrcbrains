@@ -2,6 +2,7 @@
 
 export(download_saalfeldlab_registrations)
 export(register_saalfeldlab_registrations)
+import(nat.flybrains)
 importFrom(curl,curl_download)
 importFrom(nat,reglist)
 importFrom(nat.templatebrains,add_reglist)
