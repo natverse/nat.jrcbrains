@@ -32,6 +32,8 @@ Suggests:
     nat.ants,
     spelling,
     testthat
+Enhances:
+    elmr
 Remotes: 
     jefferis/nat.ants,
     natverse/nat.h5reg,
