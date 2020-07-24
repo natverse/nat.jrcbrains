@@ -9,6 +9,7 @@
 #' See \code{\link{register_saalfeldlab_registrations}}.
 #'
 #' @keywords internal
+#' @import nat.flybrains
 "_PACKAGE"
 
 # The following block is used by usethis to automatically manage
