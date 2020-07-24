@@ -1,3 +1,7 @@
+# nat.jrcbrains 0.3.2
+
+* add `mirror_fafb()` function (#11)
+
 # nat.jrcbrains 0.3.1
 
 * Add JRC2018F_JFRC2010 bridging registration. This enables bridging to the
