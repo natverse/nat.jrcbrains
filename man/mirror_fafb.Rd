@@ -59,5 +59,14 @@ FAFB.surf.m <- mirror_fafb(FAFB14.surf)
 wire3d(as.mesh3d(FAFB.surf), col='blue')
 wire3d(as.mesh3d(FAFB.surf.m), col='red')
 }
+
+\dontrun{
+# you can also use with points in https://flywire.ai space
+# converts from raw (voxel) coords used by Neuroglancer to nm and back again
+voxel.size=c(4,4,40)
+mirror_fafb(cbind(120508, 46292, 1667)*voxel.size, sample='FlyWire')/voxel.size
+# compare with just using FAFB14
+mirror_fafb(cbind(120508, 46292, 1667)*voxel.size)/voxel.size
+}
 }
 }
