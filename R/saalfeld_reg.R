@@ -5,6 +5,8 @@
 #' @param activate whether to activate any new bridging registrations
 #'   immediately for use by \code{\link{xform_brain}} and friends (default
 #'   \code{TRUE}).
+#' @param download_urls Named character vector specifying the URLs to download.
+#'   When missing downloads a default set of registrations.
 #' @return A character vector naming any new registrations downloaded,
 #'   invisibly.
 #' @details Registrations will be downloaded from
@@ -25,7 +27,6 @@
 #'   make smaller files. They do have the advantage of support for transforming
 #'   image data as well as 3D points.
 #'
-#'
 #' @export
 #' @importFrom rappdirs user_data_dir
 #' @importFrom curl curl_download
@@ -33,22 +34,32 @@
 #' @examples
 #' regroot=getOption('nat.templatebrains.regdirs')
 #' dir(regroot)
+#'
+#' \dontrun{
+#' # example of specifying an URL for download
+#' download_saalfeldlab_registrations(download_urls=
+#'   c("JRC2018F_FCWB.h5"=paste0("https://ndownloader.figshare.com/files/",
+#'     "14369093?private_link=d5965dad295e46241ae1")))
+#' }
 download_saalfeldlab_registrations <- function(fileformat = c('.h5', '.nii'),
-                                               activate=TRUE) {
+                                               activate=TRUE,
+                                               download_urls=NULL
+                                                 ) {
   fileformat=match.arg(fileformat)
 
   if (fileformat == '.nii'){
     check_ants()
     #Support for JRC2018F_FAFB, JRC2018F_JFRC2013, JRC2018F_FCWB
-    download_urls <-
-      paste0(
-        "https://ndownloader.figshare.com/files/",
-        c(
-          "12919949?private_link=85b2f2e4f479c94441f2",
-          "12919832?private_link=a15a5cc56770ec340366",
-          "12919868?private_link=6702242e17c564229874"
+    if(is.null(download_urls))
+      download_urls <-
+        paste0(
+          "https://ndownloader.figshare.com/files/",
+          c(
+            "12919949?private_link=85b2f2e4f479c94441f2",
+            "12919832?private_link=a15a5cc56770ec340366",
+            "12919868?private_link=6702242e17c564229874"
+          )
         )
-      )
 
     download_filename <- rep('download_reg.zip', length(download_urls))
     search_pattern <- c("0GenericAffine.mat$","GenericAffine.mat$","0GenericAffine.mat$")
@@ -57,28 +68,32 @@ download_saalfeldlab_registrations <- function(fileformat = c('.h5', '.nii'),
                       "^([^_]+)_([^_]+)_")
   } else if (fileformat == '.h5'){
     #Support for JRC2018F_FAFB, JRC2018F_JFRC2013, JRC2018F_FCWB, JRC2018U_JRC2018F
-    download_urls <- paste0(
-
-      "https://ndownloader.figshare.com/files/",
-      c(
-        "14362754?private_link=3a8b1d84c5e197edc97c",
-        "14368703?private_link=2a684586d5014e31076c",
-        "14369093?private_link=d5965dad295e46241ae1",
-        "21749535?private_link=ca603876efb33fdf3028",
-        "14371574?private_link=b7120207f38b35f1e372",
-        "14368358?private_link=b29e25b6e47ccf9187a8"
+    if(is.null(download_urls)) {
+      download_urls <- paste0(
+        "https://ndownloader.figshare.com/files/",
+        c(
+          "14362754?private_link=3a8b1d84c5e197edc97c",
+          "14368703?private_link=2a684586d5014e31076c",
+          "14369093?private_link=d5965dad295e46241ae1",
+          "21749535?private_link=ca603876efb33fdf3028",
+          "14371574?private_link=b7120207f38b35f1e372",
+          "14368358?private_link=b29e25b6e47ccf9187a8"
+        )
       )
-    )
-
-    download_filename <-
-      c(
-        'JRC2018F_FAFB.h5',
-        'JRC2018F_JFRC2013.h5',
-        'JRC2018F_FCWB.h5',
-        'JRC2018F_JRCFIB2018F.h5',
-        'JRC2018U_JRC2018F.h5',
-        'JRC2018F_JFRC2010.h5'
-      )
+      download_filename <-
+        c(
+          'JRC2018F_FAFB.h5',
+          'JRC2018F_JFRC2013.h5',
+          'JRC2018F_FCWB.h5',
+          'JRC2018F_JRCFIB2018F.h5',
+          'JRC2018U_JRC2018F.h5',
+          'JRC2018F_JFRC2010.h5'
+        )
+    } else {
+      download_filename <- names(download_urls)
+      if(is.null(download_filename))
+        stop("You must name the vector supplied to `download_urls` to indicate your preferred filenames!")
+    }
     search_pattern <- rep(".h5$", length(download_urls))
     regexpattern <- rep("^([^_]+)_([^_]+)", length(download_urls))
   }
