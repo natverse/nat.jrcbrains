@@ -6,7 +6,8 @@
 \usage{
 download_saalfeldlab_registrations(
   fileformat = c(".h5", ".nii"),
-  activate = TRUE
+  activate = TRUE,
+  download_urls = NULL
 )
 }
 \arguments{
@@ -16,6 +17,9 @@ registrations (defaults to h5).}
 \item{activate}{whether to activate any new bridging registrations
 immediately for use by \code{\link{xform_brain}} and friends (default
 \code{TRUE}).}
+
+\item{download_urls}{Named character vector specifying the URLs to download.
+When missing downloads a default set of registrations.}
 }
 \value{
 A character vector naming any new registrations downloaded,
@@ -46,6 +50,13 @@ Registrations will be downloaded from
 \examples{
 regroot=getOption('nat.templatebrains.regdirs')
 dir(regroot)
+
+\dontrun{
+# example of specifying an URL for download
+download_saalfeldlab_registrations(download_urls=
+  c("JRC2018F_FCWB.h5"=paste0("https://ndownloader.figshare.com/files/",
+    "14369093?private_link=d5965dad295e46241ae1")))
+}
 }
 \seealso{
 \code{\link{register_saalfeldlab_registrations}}
