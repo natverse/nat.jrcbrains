@@ -77,7 +77,9 @@ download_saalfeldlab_registrations <- function(fileformat = c('.h5', '.nii'),
           "14369093?private_link=d5965dad295e46241ae1",
           "21749535?private_link=ca603876efb33fdf3028",
           "14371574?private_link=b7120207f38b35f1e372",
-          "14368358?private_link=b29e25b6e47ccf9187a8"
+          "14368358?private_link=b29e25b6e47ccf9187a8",
+          "14448911?private_link=2afde323b12274d3243b",
+          "42106125?private_link=bfbfc18d24fe959b78c0"
         )
       )
       download_filename <-
@@ -87,7 +89,9 @@ download_saalfeldlab_registrations <- function(fileformat = c('.h5', '.nii'),
           'JRC2018F_FCWB.h5',
           'JRC2018F_JRCFIB2018F.h5',
           'JRC2018U_JRC2018F.h5',
-          'JRC2018F_JFRC2010.h5'
+          'JRC2018F_JFRC2010.h5',
+          'JRC2018U_JRC2018M.h5',
+          "JRCFIB2022M_JRC2018M.h5"
         )
     } else {
       download_filename <- names(download_urls)
