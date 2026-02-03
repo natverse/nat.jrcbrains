@@ -7,6 +7,9 @@
 #'   \code{TRUE}).
 #' @param download_urls Named character vector specifying the URLs to download.
 #'   When missing downloads a default set of registrations.
+#' @param multi Whether to use a faster parallel file download that will also
+#'   resume interrupted downloads. This is still experimental and therefore off
+#'   by default.
 #' @return A character vector naming any new registrations downloaded,
 #'   invisibly.
 #' @details Registrations will be downloaded from
@@ -17,7 +20,7 @@
 #'   The h5 registration format typically provides a multi-resolution forward
 #'   and inverse transformations in an efficiently compressed format. See
 #'   \url{https://github.com/saalfeldlab/template-building/wiki/Hdf5-Deformation-fields}
-#'    for further details.
+#'   for further details.
 #'
 #'   The nii (NIfTI) files are the raw output format of the ANTs registration
 #'   package. Their disadvantages are that they are 1) large files and the whole
@@ -43,7 +46,8 @@
 #' }
 download_saalfeldlab_registrations <- function(fileformat = c('.h5', '.nii'),
                                                activate=TRUE,
-                                               download_urls=NULL
+                                               download_urls=NULL,
+                                               multi=FALSE
                                                  ) {
   fileformat=match.arg(fileformat)
 
@@ -108,11 +112,21 @@ download_saalfeldlab_registrations <- function(fileformat = c('.h5', '.nii'),
     dir.create(getOption('nat.jrcbrains.regfolder'), recursive = TRUE, showWarnings = FALSE)
   }
 
-  updated=character()
-
   #Step 2: Download the files to the folder..
   if(length(download_urls))
     message("Downloading files to: ", getOption('nat.jrcbrains.regfolder'))
+
+  updated <- if(multi) multi_download_h5(download_urls, download_filename)
+  else single_download_h5(download_urls, download_filename, search_pattern, regexpattern)
+
+  if(isTRUE(activate) && length(updated)>0){
+    register_saalfeldlab_registrations()
+  }
+  invisible(updated)
+}
+
+single_download_h5 <- function(download_urls, download_filename, search_pattern, regexpattern) {
+  updated=character()
   for (download_fileidx in 1:length(download_urls)){
     message("Processing: ", download_filename[download_fileidx],
             " (file ", download_fileidx, "/", length(download_urls), ")")
@@ -139,17 +153,25 @@ download_saalfeldlab_registrations <- function(fileformat = c('.h5', '.nii'),
     files_target <- setdiff(list.files(getOption('nat.jrcbrains.regfolder'),folder_name),
                             folder_name)
     result <- file.copy(file.path(getOption('nat.jrcbrains.regfolder'),files_target),
-              file.path(getOption('nat.jrcbrains.regfolder'),folder_name))
+                        file.path(getOption('nat.jrcbrains.regfolder'),folder_name))
     if(any(result)){
       updated=union(updated, files_target)
     }
     unlink(file.path(getOption('nat.jrcbrains.regfolder'),files_target))
   }
+  return(updated)
+}
 
-  if(isTRUE(activate) && length(updated)>0){
-    register_saalfeldlab_registrations()
-  }
-  invisible(updated)
+multi_download_h5 <- function(download_urls, download_filename, resume=TRUE, ...) {
+  subfolders=sub("\\.h5", "", download_filename)
+  folders=path.expand(file.path(getOption('nat.jrcbrains.regfolder'), subfolders))
+  download_filename=file.path(folders, basename(download_filename))
+  sapply(folders, dir.create,showWarnings = F, recursive = T)
+
+  res=curl::multi_download(download_urls, destfiles = download_filename, resume=resume, ...)
+  # for now just update all
+  updated=file.path(subfolders, download_filename)
+  updated
 }
 
 #' Register Saalfeld Lab registrations with nat.templatebrains

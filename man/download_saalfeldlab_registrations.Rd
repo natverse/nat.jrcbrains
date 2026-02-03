@@ -7,7 +7,8 @@
 download_saalfeldlab_registrations(
   fileformat = c(".h5", ".nii"),
   activate = TRUE,
-  download_urls = NULL
+  download_urls = NULL,
+  multi = FALSE
 )
 }
 \arguments{
@@ -20,6 +21,10 @@ immediately for use by \code{\link{xform_brain}} and friends (default
 
 \item{download_urls}{Named character vector specifying the URLs to download.
 When missing downloads a default set of registrations.}
+
+\item{multi}{Whether to use a faster parallel file download that will also
+resume interrupted downloads. This is still experimental and therefore off
+by default.}
 }
 \value{
 A character vector naming any new registrations downloaded,
@@ -37,7 +42,7 @@ Registrations will be downloaded from
   The h5 registration format typically provides a multi-resolution forward
   and inverse transformations in an efficiently compressed format. See
   \url{https://github.com/saalfeldlab/template-building/wiki/Hdf5-Deformation-fields}
-   for further details.
+  for further details.
 
   The nii (NIfTI) files are the raw output format of the ANTs registration
   package. Their disadvantages are that they are 1) large files and the whole
