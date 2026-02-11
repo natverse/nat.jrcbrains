@@ -165,13 +165,19 @@ single_download_h5 <- function(download_urls, download_filename, search_pattern,
 multi_download_h5 <- function(download_urls, download_filename, resume=TRUE, ...) {
   subfolders=sub("\\.h5", "", download_filename)
   folders=path.expand(file.path(getOption('nat.jrcbrains.regfolder'), subfolders))
-  download_filename=file.path(folders, basename(download_filename))
-  sapply(folders, dir.create,showWarnings = F, recursive = T)
+  destfiles=file.path(folders, download_filename)
+  sapply(folders, dir.create, showWarnings = FALSE, recursive = TRUE)
 
-  res=curl::multi_download(download_urls, destfiles = download_filename, resume=resume, ...)
-  # for now just update all
-  updated=file.path(subfolders, download_filename)
-  updated
+  res=curl::multi_download(download_urls, destfiles=destfiles, resume=resume, ...)
+
+  ok=!is.na(res$success) & res$success
+  failed=!ok
+  if(any(failed))
+    warning("Failed to download: ",
+            paste(download_filename[failed], collapse=", "))
+  # status 200 = full download, 206 = resumed; 416 = already complete (skip)
+  updated=ok & res$status_code %in% c(200L, 206L)
+  download_filename[updated]
 }
 
 #' Register Saalfeld Lab registrations with nat.templatebrains
