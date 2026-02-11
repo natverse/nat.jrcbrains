@@ -7,6 +7,10 @@
 #'   \code{TRUE}).
 #' @param download_urls Named character vector specifying the URLs to download.
 #'   When missing downloads a default set of registrations.
+#' @param filenames Character vector of filenames to download (e.g.
+#'   \code{"JRCFIB2022M_JRC2018M.h5"}). When provided, only these files are
+#'   downloaded from the built-in list. Ignored when \code{download_urls} is
+#'   specified.
 #' @param multi Whether to use a faster parallel file download that will also
 #'   resume interrupted downloads. This is still experimental and therefore off
 #'   by default.
@@ -47,6 +51,7 @@
 download_saalfeldlab_registrations <- function(fileformat = c('.h5', '.nii'),
                                                activate=TRUE,
                                                download_urls=NULL,
+                                               filenames=NULL,
                                                multi=FALSE
                                                  ) {
   fileformat=match.arg(fileformat)
@@ -102,6 +107,14 @@ download_saalfeldlab_registrations <- function(fileformat = c('.h5', '.nii'),
       if(is.null(download_filename))
         stop("You must name the vector supplied to `download_urls` to indicate your preferred filenames!")
     }
+    if(!is.null(filenames)) {
+      sel <- download_filename %in% filenames
+      if(!any(sel))
+        stop("None of the requested filenames match available registrations: ",
+             paste(filenames, collapse = ", "))
+      download_urls <- download_urls[sel]
+      download_filename <- download_filename[sel]
+    }
     search_pattern <- rep(".h5$", length(download_urls))
     regexpattern <- rep("^([^_]+)_([^_]+)", length(download_urls))
   }
@@ -115,6 +128,9 @@ download_saalfeldlab_registrations <- function(fileformat = c('.h5', '.nii'),
   #Step 2: Download the files to the folder..
   if(length(download_urls))
     message("Downloading files to: ", getOption('nat.jrcbrains.regfolder'))
+
+  if(multi && fileformat != '.h5')
+    stop("multi download is currently only supported for h5 format registrations")
 
   updated <- if(multi) multi_download_h5(download_urls, download_filename)
   else single_download_h5(download_urls, download_filename, search_pattern, regexpattern)
@@ -165,13 +181,19 @@ single_download_h5 <- function(download_urls, download_filename, search_pattern,
 multi_download_h5 <- function(download_urls, download_filename, resume=TRUE, ...) {
   subfolders=sub("\\.h5", "", download_filename)
   folders=path.expand(file.path(getOption('nat.jrcbrains.regfolder'), subfolders))
-  download_filename=file.path(folders, basename(download_filename))
-  sapply(folders, dir.create,showWarnings = F, recursive = T)
+  destfiles=file.path(folders, download_filename)
+  sapply(folders, dir.create, showWarnings = FALSE, recursive = TRUE)
 
-  res=curl::multi_download(download_urls, destfiles = download_filename, resume=resume, ...)
-  # for now just update all
-  updated=file.path(subfolders, download_filename)
-  updated
+  res=curl::multi_download(download_urls, destfiles=destfiles, resume=resume, ...)
+
+  ok=!is.na(res$success) & res$success
+  failed=!ok
+  if(any(failed))
+    warning("Failed to download: ",
+            paste(download_filename[failed], collapse=", "))
+  # status 200 = full download, 206 = resumed; 416 = already complete (skip)
+  updated=ok & res$status_code %in% c(200L, 206L)
+  download_filename[updated]
 }
 
 #' Register Saalfeld Lab registrations with nat.templatebrains
