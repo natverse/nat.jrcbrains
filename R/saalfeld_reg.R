@@ -116,6 +116,9 @@ download_saalfeldlab_registrations <- function(fileformat = c('.h5', '.nii'),
   if(length(download_urls))
     message("Downloading files to: ", getOption('nat.jrcbrains.regfolder'))
 
+  if(multi && fileformat != '.h5')
+    stop("multi download is currently only supported for h5 format registrations")
+
   updated <- if(multi) multi_download_h5(download_urls, download_filename)
   else single_download_h5(download_urls, download_filename, search_pattern, regexpattern)
 
