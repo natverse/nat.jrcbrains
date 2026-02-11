@@ -1,4 +1,12 @@
-# nat.jrcbrains (development version)
+# nat.jrcbrains 0.3.3
+
+* Add `filenames` parameter to `download_saalfeldlab_registrations()` to
+  download a subset of registrations by name.
+* Add support for resumable parallel downloads via `multi=TRUE` using
+  `curl::multi_download()`.
+* Fix path bug in `multi_download_h5()` — files are now stored in correctly
+  named subfolders.
+* Add male CNS registrations (JRCFIB2022M_JRC2018M, JRC2018U_JRC2018M).
 
 # nat.jrcbrains 0.3.2
 
